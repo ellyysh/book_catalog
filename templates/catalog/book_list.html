@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load book_extras %}
+
+{% block title %}{% if genre %}{{ genre.name }} — {% endif %}{{ block.super }}{% endblock %}
+
+{% block content %}
+    <h1>{% firstof genre.name "Все книги" %}</h1>
+
+    {% avg_price as avg %}
+    <p class="summary">
+        Найдено: {{ books|length }} {{ books|length|ru_plural:"книга,книги,книг" }}.
+        Средняя цена по каталогу — {{ avg|rub }}.
+    </p>
+
+    <section class="grid">
+        {% for book in books %}
+            {% cycle 'card-a' 'card-b' as card_class silent %}
+            {% include "includes/book_card.html" with book=book card_class=card_class %}
+        {% empty %}
+            <p class="empty">В этом жанре пока нет книг.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

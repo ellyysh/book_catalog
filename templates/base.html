@@ -1,0 +1,26 @@
+{% load static book_extras %}<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Каталог книг{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include "includes/header.html" %}
+
+    <div class="layout">
+        <aside class="sidebar">
+            <h3>Жанры</h3>
+            {# inclusion_tag: рендерит includes/genre_menu.html #}
+            {% genre_menu genre.slug %}
+        </aside>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    {% include "includes/footer.html" %}
+</body>
+</html>

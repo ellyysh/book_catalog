@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load book_extras humanize %}
+
+{% block title %}{{ book.title }} — {{ block.super }}{% endblock %}
+
+{% block content %}
+    <a class="back" href="{% url 'catalog:book_list' %}">← к списку</a>
+
+    {% with author=book.author %}
+        <h1>{{ book.title }}</h1>
+        <p class="author">
+            {{ author.name }}{% if author.country %}, {{ author.country }}{% endif %}
+            {% if author.birth_year %} ({{ author.birth_year }} г. р.){% endif %}
+        </p>
+    {% endwith %}
+
+    <p class="rating big">{{ book.rating|stars }} {{ book.rating|floatformat:1 }}</p>
+
+    <div class="descr-full">{{ book.description|default:"Описание пока не добавлено."|linebreaks }}</div>
+
+    <table class="info">
+        <tr><th>Жанр</th><td>{{ book.genre|default:"—" }}</td></tr>
+        <tr><th>Год издания</th><td>{{ book.published_year }} — {{ book.published_year|book_age }}</td></tr>
+        <tr><th>Страниц</th><td>{{ book.pages|intcomma }} ({{ book.pages|reading_time }})</td></tr>
+        <tr><th>Цена</th><td>{{ book.price|rub }}</td></tr>
+        <tr><th>Наличие</th><td>{{ book.in_stock|yesno:"✔ есть,✘ нет" }}</td></tr>
+        <tr><th>Добавлена</th><td>{{ book.created_at|date:"j E Y, H:i" }}</td></tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% load book_extras %}
+<ul class="genre-menu">
+    <li>
+        <a href="{% url 'catalog:book_list' %}" {% if not active_slug %}class="active"{% endif %}>Все книги</a>
+    </li>
+    {% for g in genres %}
+        <li>
+            <a href="{% url 'catalog:books_by_genre' g.slug %}"
+               {% if g.slug == active_slug %}class="active"{% endif %}>
+                {{ g.name }} <small>({{ g.book_count }})</small>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

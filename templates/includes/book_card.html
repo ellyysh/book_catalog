@@ -1,0 +1,27 @@
+{% load book_extras %}
+{# Карточка книги. Подключается через {% include "includes/book_card.html" with book=... %} #}
+<article class="card {{ card_class }}">
+    <div class="card-num">#{{ forloop.counter }}</div>
+
+    <h2><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h2>
+    <p class="author">{{ book.author.name|upper }}</p>
+
+    <p class="rating" title="{{ book.rating|floatformat:1 }} из 5">
+        {{ book.rating|stars }} <span>{{ book.rating|floatformat:1 }}</span>
+    </p>
+
+    <p class="descr">{{ book.description|default:"Описание пока не добавлено."|truncatewords:18 }}</p>
+
+    <dl class="meta">
+        <dt>Жанр</dt>      <dd>{{ book.genre|default:"—" }}</dd>
+        <dt>Издана</dt>    <dd>{{ book.published_year }} ({{ book.published_year|book_age }})</dd>
+        <dt>Объём</dt>     <dd>{{ book.pages }} стр. · {{ book.pages|reading_time }}</dd>
+    </dl>
+
+    <div class="card-footer">
+        <span class="price">{{ book.price|rub }}</span>
+        <span class="stock {% if book.in_stock %}yes{% else %}no{% endif %}">
+            {{ book.in_stock|yesno:"в наличии,нет в наличии" }}
+        </span>
+    </div>
+</article>
