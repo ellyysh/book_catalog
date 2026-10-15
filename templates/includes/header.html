@@ -1,6 +1,6 @@
 {% load book_extras %}
 <header class="header">
-    <a class="logo" href="{% url 'catalog:book_list' %}">Книжная полка</a>
+    <a class="logo" href="{% url 'catalog:book_list' %}">Каталог книг</a>
     {% total_books as count %}
     <span class="header-stats">
         В каталоге {{ count }} {{ count|ru_plural:"книга,книги,книг" }}
